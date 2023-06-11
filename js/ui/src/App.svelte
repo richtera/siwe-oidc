@@ -67,7 +67,7 @@
 		},
 	});
 
-	let client_metadata = {};
+	let client_metadata: any = {};
 	onMount(async () => {
 		try {
 			client_metadata = fetch(`${window.location.origin}/client/${client_id}`).then((response) => response.json());

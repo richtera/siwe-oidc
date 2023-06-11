@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "description": "Built with @cloudflare/next-on-pages@1.0.2.",
+  "include": ["/*"],
+  "exclude": ["/build/*", "/img/*", "/legal/*", "/index.html", "/", "/error.html", "/favicon.png", "/_workers.js/*"]
+}

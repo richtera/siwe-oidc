@@ -1,7 +1,11 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const dotenv = require('dotenv');
 const path = require('path');
 const sveltePreprocess = require('svelte-preprocess');
 const webpack = require('webpack');
+
+dotenv.config('./.env');
+dotenv.config('../../.env');
 
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
@@ -14,6 +18,7 @@ module.exports = {
 		alias: {
 			svelte: path.dirname(require.resolve('svelte/package.json'))
 		},
+    conditionNames: ["svelte", "module", "browser", "default", "import"],
 		extensions: ['.mjs', '.js', '.ts', '.svelte'],
 		mainFields: ['svelte', 'browser', 'module', 'main'],
 		fallback: {

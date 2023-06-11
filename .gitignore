@@ -3,3 +3,8 @@
 **/wrangler.toml
 **/node_module
 **/dist
+/static/_worker.js/*
+/node_modules
+/private.pem
+/.wrangler
+/.env
