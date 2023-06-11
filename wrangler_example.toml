@@ -1,11 +1,13 @@
-name = "siwe_oidc"
+name = "siwe-oidc" # your project name
+compatibility_date = "2023-05-30"
+
 type = "javascript"
-account_id = ""
+account_id = "" # your account id
 # zone_id = ""
 workers_dev = false
-compatibility_date = "2021-12-20"
 
 kv_namespaces = [
+    # fill in id and optionally preview_id for kv
     { binding = "SIWE_OIDC", id = "", preview_id = "" }
 ]
 
@@ -24,13 +26,4 @@ tag = "v1"
 new_classes = ["DOCodes"]
 
 [build]
-command = "cargo install -q worker-build && worker-build --release"
-
-[build.upload]
-dir    = "build/worker"
-format = "modules"
-main   = "./shim.mjs"
-
-[[build.upload.rules]]
-globs = ["**/*.wasm"]
-type  = "CompiledWasm"
+command = "mkdir -p static/_worker.js && (cd js/ui && npm ci && npm run build) && cargo install -q worker-build && worker-build --release && cp -r build/worker/* static/_worker.js/ && mv static/_worker.js/shim.mjs static/_worker.js/index.js"
