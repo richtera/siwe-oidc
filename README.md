@@ -13,6 +13,7 @@ You will need [`wrangler`](https://github.com/cloudflare/wrangler).
 First, copy the configuration file template:
 ```bash
 cp wrangler_example.toml wrangler.toml
+cp .env.example .env
 ```
 
 Then replace the following fields:
@@ -21,6 +22,11 @@ Then replace the following fields:
 - `kv_namespaces`: a KV namespace ID (created with `wrangler kv:namespace create SIWE_OIDC`); and
 - the environment variables under `vars`.
 
+Then replace the following fields in .env:
+- `INFURA_ID`= your infura id;
+- `PORTIS_ID`= your portis key;
+- `FORTMATIC_KEY`= your formatic key;
+
 You will also need to add a secret RSA key in PEM format:
 ```
 wrangler secret put RSA_PEM
@@ -28,26 +34,7 @@ wrangler secret put RSA_PEM
 
 At this point, you should be able to create/publish the worker:
 ```
-wrangler publish
-```
-
-The IdP currently only supports having the **frontend under the same subdomain as
-the API**. Here is the configuration for Cloudflare Pages:
-- `Build command`: `cd js/ui && npm install && npm run build`;
-- `Build output directory`: `/static`; and
-- `Root directory`: `/`.
-And you will need to add some rules to do the routing between the Page and the
-Worker. Here are the rules for the Worker (the Page being used as the fallback
-on the subdomain):
-```
-siweoidc.example.com/s*
-siweoidc.example.com/u*
-siweoidc.example.com/r*
-siweoidc.example.com/a*
-siweoidc.example.com/t*
-siweoidc.example.com/j*
-siweoidc.example.com/c*
-siweoidc.example.com/.w*
+wrangler pages publish static
 ```
 
 ### Stand-Alone Binary
@@ -101,12 +88,9 @@ OIDC Conformance Suite:
 ### Cloudflare Worker
 
 ```bash
-wrangler dev
+wrangler pages dev static
 ```
 You can now use http://127.0.0.1:8787/.well-known/openid-configuration.
-
-> At the moment it's not possible to use it end-to-end with the frontend as they
-> need to share the same host (i.e. port), unless using a local load-balancer.
 
 ### Stand Alone Binary
 
